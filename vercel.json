@@ -1,0 +1,92 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "pnpm build:full",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "outputDirectory": ".next",
+  "public": true,
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=0, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(png|jpg|jpeg|webp|avif|gif|svg|ico))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(js|css|woff|woff2|ttf|otf))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/wp-admin/(.*)",
+      "destination": "/404",
+      "permanent": false
+    },
+    {
+      "source": "/wp-login.php",
+      "destination": "/404", 
+      "permanent": false
+    },
+    {
+      "source": "/feed/(.*)",
+      "destination": "/api/feed",
+      "permanent": false
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/revalidate",
+      "schedule": "0 */6 * * *"
+    }
+  ],
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": "1"
+  }
+}

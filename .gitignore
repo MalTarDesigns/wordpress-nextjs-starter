@@ -44,3 +44,44 @@ certificates
 
 #generated
 gql
+
+# Testing and coverage
+test-results/
+playwright-report/
+coverage/
+.nyc_output
+test-results-*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Turbo and build tools
+.turbo
+.parcel-cache
+.cache/
+
+# MalTar Designs specific
+.claude/workspace/
+client-configs/
+*.local.config.js
+.maltardesigns/
+
+# WordPress plugin build
+wordpress-plugin/build/
+wordpress-plugin/vendor/
+
+# Bundle analysis
+.next/analyze/
+
+# Backup and temporary files
+*.bak
+*.tmp
+*.temp
+
+# Additional environment files
+.env.example
+.env.vercel.example

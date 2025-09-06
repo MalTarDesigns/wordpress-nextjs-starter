@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { print } from "graphql/language/printer";
 
-import styles from "./Navigation.module.css";
-
-import { MenuItem, RootQueryToMenuItemConnection } from "@/gql/graphql";
+import type { MenuItem, RootQueryToMenuItemConnection } from "@/gql/graphql";
 import { fetchGraphQL } from "@/utils/fetchGraphQL";
+import { ThemeToggle } from "@/components/theme-toggle";
 import gql from "graphql-tag";
 
 async function getData() {
@@ -36,25 +35,29 @@ export default async function Navigation() {
 
   return (
     <nav
-      className={styles.navigation}
+      className="flex items-center justify-between p-5 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
       role="navigation"
       itemScope
       itemType="http://schema.org/SiteNavigationElement"
     >
-      {menuItems.nodes.map((item: MenuItem, index: number) => {
-        if (!item.uri) return null;
+      <div className="flex items-center gap-6">
+        {menuItems.nodes.map((item: MenuItem, index: number) => {
+          if (!item.uri) return null;
 
-        return (
-          <Link
-            itemProp="url"
-            href={item.uri}
-            key={index}
-            target={item.target || "_self"}
-          >
-            <span itemProp="name">{item.label}</span>
-          </Link>
-        );
-      })}
+          return (
+            <Link
+              itemProp="url"
+              href={item.uri}
+              key={index}
+              target={item.target || "_self"}
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+            >
+              <span itemProp="name">{item.label}</span>
+            </Link>
+          );
+        })}
+      </div>
+      <ThemeToggle />
     </nav>
   );
 }

@@ -1,458 +1,780 @@
-# A Feature Rich App Router WordPress Example
+# WordPress Next.js Starter by MalTar Designs
 
-This is an example on how you can build a Next.js 14 project (with App Router), using [WordPress](https://wordpress.org) as the data source.
+<div align="center">
 
-## Key features:
+![MalTar Designs](https://img.shields.io/badge/Made%20by-MalTar%20Designs-blue.svg?style=for-the-badge)
+![Version](https://img.shields.io/github/v/release/MalTarDesigns/wordpress-nextjs-starter?style=for-the-badge)
+![License](https://img.shields.io/github/license/MalTarDesigns/wordpress-nextjs-starter?style=for-the-badge)
 
-- `robots.ts`: This automatically gets the robots.txt of the API route and serves it on the `/robots.txt` route.
-- `sitemap.ts`: This automatically gets all paths from the API and generates a sitemap to serve on the `/sitemap.xml` route.
-- `middleware.ts`: This contains a middleware function that checks the users path for stored redirects, and redirects the user if a match is found.
-- `[[...slug]]`: This is the catch-all route that is used to render all pages. It is important that this route is not removed, as it is used to render all pages. It fetches the ContentType and renders the corresponding
-- `not-found.tsx`: This page is used for dynamic 404 handling - adjust the database id to match your decired WordPress page, and make sure the WordPress slug is "not-found", your 404 page will then be editable from your CMS.
-- `codegen.ts`: Automatic type generation for your WordPress installation
-- `Draft Mode`: Seamless Preview / Draft Preview support, using authentication through WPGraphQL JWT Authentication and Next.js Draft Mode
-- `On Demand Cache Revalidation`: Including a bare minimum WordPress theme that implements cache revalidation, WordPress link rewrites and other utils for integrating with Next.js
+**Production-ready WordPress headless CMS starter built with Next.js 15, TypeScript, and comprehensive client-focused features.**
 
-## Deploy your own
+*Enhanced with advanced BlockRenderer, testing suite, security features, and deployment automation for agencies and developers.*
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/cms-wordpress&project-name=cms-wordpress&repository-name=cms-wordpress)
+[🚀 Get Started](#-quick-start-guide) • [📖 Documentation](./docs/) • [🎯 Live Demo](#) • [💼 Hire MalTar Designs](mailto:contact@maltardesigns.com)
 
-### Related examples
+</div>
 
-- [AgilityCMS](/examples/cms-agilitycms)
-- [Builder.io](/examples/cms-builder-io)
-- [ButterCMS](/examples/cms-buttercms)
-- [Contentful](/examples/cms-contentful)
-- [Cosmic](/examples/cms-cosmic)
-- [DatoCMS](/examples/cms-datocms)
-- [DotCMS](/examples/cms-dotcms)
-- [Drupal](/examples/cms-drupal)
-- [Enterspeed](/examples/cms-enterspeed)
-- [Ghost](/examples/cms-ghost)
-- [GraphCMS](/examples/cms-graphcms)
-- [Kontent.ai](/examples/cms-kontent-ai)
-- [MakeSwift](/examples/cms-makeswift)
-- [Payload](/examples/cms-payload)
-- [Plasmic](/examples/cms-plasmic)
-- [Prepr](/examples/cms-prepr)
-- [Prismic](/examples/cms-prismic)
-- [Sanity](/examples/cms-sanity)
-- [Sitecore XM Cloud](/examples/cms-sitecore-xmcloud)
-- [Sitefinity](/examples/cms-sitefinity)
-- [Storyblok](/examples/cms-storyblok)
-- [TakeShape](/examples/cms-takeshape)
-- [Tina](/examples/cms-tina)
-- [Umbraco](/examples/cms-umbraco)
-- [Umbraco heartcore](/examples/cms-umbraco-heartcore)
-- [Webiny](/examples/cms-webiny)
-- [WordPress](/examples/cms-wordpress)
-- [Blog Starter](/examples/blog-starter)
+---
 
-## How to use
+## 🏆 Enhanced by MalTar Designs
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), [pnpm](https://pnpm.io), or [Bun](https://bun.sh/docs/cli/bunx) to bootstrap the example:
+This template is built upon Vercel's Next.js WordPress CMS example and significantly enhanced with enterprise-grade features, comprehensive testing, and client-focused development workflows.
+
+## 🚀 Features
+
+### Core Technologies
+- **Next.js 15** with App Router and React Server Components
+- **TypeScript** with strict type safety and comprehensive WordPress types
+- **GraphQL** with automated code generation and type-safe queries
+- **Tailwind CSS 4** with shadcn/ui components and dark mode support
+- **ISR (Incremental Static Regeneration)** for optimal performance
+- **Jest & Playwright** for comprehensive testing (unit, integration, E2E)
+
+### WordPress Integration
+- **Advanced Block Renderer** with support for Gutenberg blocks and ACF flexible content
+- **Type-safe GraphQL queries** with comprehensive WordPress type definitions
+- **Preview mode** support for draft content with security tokens
+- **WordPress redirects** handling via Redirection plugin
+- **SEO optimization** with Yoast/RankMath compatibility and structured data
+- **Real-time webhook system** for instant content updates
+- **WordPress plugin** for seamless integration and admin management
+
+### Performance & SEO
+- **Enhanced metadata API** with WordPress SEO data integration
+- **Automatic sitemap** generation with dynamic content
+- **Cache-first strategy** with intelligent revalidation
+- **Bundle analysis** and optimization tools
+- **Security headers** and comprehensive rate limiting
+- **Image optimization** with Next.js Image component and WordPress media
+- **Core Web Vitals** optimization
+
+### Developer Experience
+- **Environment validation** with comprehensive type checking
+- **Custom hooks** for WordPress data fetching and state management
+- **Error boundaries** with graceful fallbacks and debugging
+- **Development tools** with hot reloading and comprehensive debugging
+- **Comprehensive testing** with 80% coverage requirement
+- **CLI deployment** scripts and production optimization
+
+## 📦 Quick Start Guide
+
+### Prerequisites
+
+- **Node.js** 18+ with npm/pnpm
+- **WordPress site** with GraphQL enabled (WPGraphQL plugin)
+- **Domain** for deployment (optional for testing)
+
+### 1. Clone and Install
 
 ```bash
-npx create-next-app --example cms-wordpress cms-wordpress-app
+# Clone the repository
+git clone <repository-url>
+cd wordpress-next-starter
+
+# Install dependencies (pnpm recommended)
+pnpm install
+
+# Or with npm
+npm install
 ```
+
+### 2. Environment Configuration
+
+Copy the appropriate environment template:
 
 ```bash
-yarn create next-app --example cms-wordpress cms-wordpress-app
+# For local development
+cp .env.example .env.local
+
+# For Vercel deployment
+cp .env.vercel.example .env.local
 ```
+
+Configure your WordPress connection:
+
+```env
+# WordPress API Configuration (Required)
+NEXT_PUBLIC_WORDPRESS_API_URL=https://your-wordpress-site.com
+NEXT_PUBLIC_WORDPRESS_API_HOSTNAME=your-wordpress-site.com
+NEXT_PUBLIC_BASE_URL=https://your-nextjs-site.com
+HEADLESS_SECRET=your-super-secret-key-min-32-characters
+
+# WordPress Authentication (Optional - for enhanced features)
+WP_USER=your-wp-username
+WP_APP_PASS=your-app-password
+
+# Site Metadata (Optional)
+NEXT_PUBLIC_SITE_NAME="Your Site Name"
+NEXT_PUBLIC_SITE_DESCRIPTION="Your site description"
+```
+
+### 3. WordPress Setup
+
+Install required WordPress plugins:
 
 ```bash
-pnpm create next-app --example cms-wordpress cms-wordpress-app
+# Required plugins
+- WPGraphQL (enables GraphQL API)
+- WPGraphQL for Advanced Custom Fields (if using ACF)
+- Yoast SEO or RankMath (for SEO data)
+
+# Optional plugins
+- Redirection (for URL redirects)
+- WP Headless (for enhanced headless features)
 ```
+
+### 4. Generate Types and Start Development
 
 ```bash
-bunx create-next-app --example cms-wordpress cms-wordpress-app
+# Generate TypeScript types from WordPress GraphQL schema
+pnpm codegen
+
+# Validate environment configuration
+pnpm validate-env
+
+# Start development server with Turbo
+pnpm dev
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## 🏗️ Project Structure
 
-## Configuration
-
-### WordPress
-
-1. Set `Site Address (URL)` to your frontend URL, e.g. `https://localhost:3000` in Settings -> General
-2. Make sure Permalinks are set to `Post name` in Settings -> Permalinks
-3. Set `Sample page` as `Static page` in Settings -> Reading
-4. Create a new page called `404 not found` ensuring the slug is `404-not-found`
-5. Install and activate following plugins:
-   - Add WPGraphQL SEO
-   - Classic Editor
-   - Redirection
-   - WPGraphQL
-   - [WPGraphQL JWT Authentication](https://github.com/wp-graphql/wp-graphql-jwt-authentication/releases)
-   - Yoast SEO
-   - [Advanced Custom Fields PRO](https://www.advancedcustomfields.com/pro/) (optional)
-   - WPGraphQL for ACF (optional)
-6. Do first-time install of Redirection. Recommended to enable monitor of changes
-7. Configure Yoast SEO with:
-
-   - Disable XML Sitemaps under Yoast SEO -> Settings
-   - If you did not change the `Site Address (URL)` before installing Yoast, it will ask you to run optimize SEO data after changing permalinks, do so
-   - Generate a robots.txt file under Yoast SEO -> Tools -> File Editor
-   - Modify robots.txt sitemap reference from `wp-sitemap.xml` to `sitemap.xml`
-
-8. `Enable Public Introspection` under GraphQL -> Settings
-9. Add following constants to `wp-config.php`
-   ```php
-   define('HEADLESS_SECRET', 'INSERT_RANDOM_SECRET_KEY');
-   define('HEADLESS_URL', 'INSERT_LOCAL_DEVELOPMENT_URL'); // http://localhost:3000 for local development
-   define('GRAPHQL_JWT_AUTH_SECRET_KEY', 'INSERT_RANDOM_SECRET_KEY');
-   define('GRAPHQL_JWT_AUTH_CORS_ENABLE', true);
-   ```
-10. Create a bare minimum custom WordPress theme, consisting of only 2 files:
-
-- [style.css](https://developer.wordpress.org/themes/basics/main-stylesheet-style-css/#basic-structure)
-- functions.php (see the bottom of this README)
-
-### Next.js
-
-1. Clone the repository
-2. Run `npm install` to install dependencies
-3. Create `.env` file in the root directory and add the following variables:
-
-| Name                                 | Value                                                                   | Example                  | Description                                                                                                                                                         |
-| ------------------------------------ | ----------------------------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_BASE_URL`               | Insert base url of frontend                                             | http://localhost:3000    | Used for generating sitemap, redirects etc.                                                                                                                         |
-| `NEXT_PUBLIC_WORDPRESS_API_URL`      | Insert base url of your WordPress installation                          | http://wp-domain.com     | Used when requesting wordpress for data                                                                                                                             |
-| `NEXT_PUBLIC_WORDPRESS_API_HOSTNAME` | The hostname without protocol for your WordPress installation           | wp-domain.com            | Used for dynamically populating the next.config images remotePatterns                                                                                               |
-| `HEADLESS_SECRET`                    | Insert the same random key, that you generated for your `wp-config.php` | INSERT_RANDOM_SECRET_KEY | Used for public exhanges between frontend and backend                                                                                                               |
-| `WP_USER`                            | Insert a valid WordPress username                                       | username                 | Username for a system user created specifically for interacting with your WordPress installation                                                                    |
-| `WP_APP_PASS`                        | Insert application password                                             | 1234 5678 abcd efgh      | [Generate an application password](https://make.wordpress.org/core/2020/11/05/application-passwords-integration-guide/) for the WordPress user defined in `WP_USER` |
-
-> [!WARNING] > `WP_USER` and `WP_APP_PASS` are critical for making preview and redirection work
-
-4. Adjust the ID in `not-found.tsx` to match the post id of your "404 Not Found" page in WordPress
-
-5. `npm run dev` and build an awesome application with WordPress!
-
-> [!NOTE] > Running `npm run dev` will automatically generate typings from the WordPress installation found on the url provided in your environment variable: `NEXT_PUBLIC_WORDPRESS_API_URL`
-
-## GraphQL and typescript types
-
-We are generating typescript types from the provided schema with Codegen.
-
-### Enabling Auto Completion for graphql queries
-
-If you want to add auto completion for your queries, you can do this by installing the "Apollo GraphQL" extension in VS Code and adding an `apollo.config.js` file, next to the `next.config.js`, and add the following to it:
-
-```javascript
-module.exports = {
-  client: {
-    service: {
-      name: "WordPress",
-      localSchemaFile: "./src/gql/schema.gql",
-    },
-  },
-};
+```
+wordpress-next-starter/
+├── src/
+│   ├── app/                          # Next.js 15 App Router
+│   │   ├── layout.tsx               # Root layout with metadata
+│   │   ├── [[...slug]]/            # Dynamic WordPress routing
+│   │   │   └── page.tsx            # Main page template
+│   │   ├── api/                    # API routes
+│   │   │   ├── revalidate/         # Webhook revalidation
+│   │   │   ├── preview/            # Preview mode
+│   │   │   └── webhook/            # Webhook management
+│   │   ├── demo/                   # Component showcase
+│   │   ├── sitemap.ts              # Dynamic sitemap
+│   │   └── robots.ts               # Robots.txt
+│   ├── components/
+│   │   ├── Templates/              # Content templates
+│   │   │   ├── Page/              # Page template
+│   │   │   └── Post/              # Post template
+│   │   ├── Globals/               # Global components
+│   │   │   ├── Navigation/        # Site navigation
+│   │   │   └── PreviewNotice/     # Preview mode notice
+│   │   ├── BlockRenderer/         # WordPress block system
+│   │   │   ├── blocks/            # Block components
+│   │   │   └── README.md          # Block system docs
+│   │   └── ui/                    # shadcn/ui components
+│   ├── hooks/                     # Custom React hooks
+│   ├── lib/                       # Utility libraries
+│   │   └── env.ts                 # Environment validation
+│   ├── types/                     # TypeScript definitions
+│   │   ├── wordpress.ts           # WordPress types
+│   │   ├── blocks.ts              # Block types
+│   │   └── env.d.ts               # Environment types
+│   └── utils/                     # Utility functions
+│       ├── fetchGraphQL.ts        # GraphQL client
+│       ├── seoData.ts             # SEO utilities
+│       └── blockParser.ts         # Block parsing
+├── __tests__/                     # Test files
+│   ├── unit/                      # Unit tests
+│   ├── components/                # Component tests
+│   ├── api/                       # API tests
+│   └── integration/               # Integration tests
+├── e2e/                          # End-to-end tests
+├── docs/                         # Documentation
+├── scripts/                      # Utility scripts
+├── wordpress-plugin/             # WordPress integration plugin
+└── vercel.json                   # Vercel configuration
 ```
 
-## Advanced Custom Fields PRO (optional, but recommended)
+## 🔧 Available Scripts
 
-I will recommend building your page content by using the [Flexible Content](https://www.advancedcustomfields.com/resources/flexible-content/) data type in ACF Pro.
-This will make you able to create a "Block Builder" editor experience, but still having everything automatically type generated, and receiving the data in a structured way.
-The default "Gutenberg" editor returns a lot of HTML, which makes you loose a lot of the advantages of using GraphQL with type generation.
+### Development
+```bash
+pnpm dev                    # Start development server with Turbo
+pnpm dev:codegen           # Generate types and start dev server
+pnpm validate-env          # Validate environment variables
+```
 
-## Redirection setup
+### Building
+```bash
+pnpm build                 # Build for production
+pnpm build:analyze         # Build with bundle analysis
+pnpm build:full           # Generate types and build
+pnpm build:static         # Build as static site
+pnpm build:production     # Production build with optimizations
+```
 
-The example supports the WordPress "Redirection" plugin. the `WP_USER` and `WP_APP_PASS` environment variables are required, for this to work. By implementing this you can manage redirects for your content, through your WordPress CMS
+### Code Quality
+```bash
+pnpm lint                  # ESLint with auto-fix
+pnpm lint:strict          # ESLint with zero warnings
+pnpm type-check           # TypeScript compiler check
+```
 
-## Draft / Preview support
+### Testing
+```bash
+pnpm test                  # Run all Jest tests
+pnpm test:watch           # Watch mode testing
+pnpm test:coverage        # Generate coverage report
+pnpm test:e2e             # End-to-end tests with Playwright
+pnpm test:all             # All tests (Jest + Playwright)
+```
 
-The example supports WordPress preview (also draft preview), when enabling `draftMode` in the `api/preview/route.ts` it logs the `WP_USER` in with the `WP_APP_PASS` and requests the GraphQL as an authenticated user. This makes draft and preview available. If a post is in "draft" status, it doesn't have a real slug. In this case we redirect to a "fake" route called `/preview/${id}` and uses the supplied id for fetching data for the post.
+### GraphQL & Types
+```bash
+pnpm codegen              # Generate types from GraphQL schema
+pnpm codegen:watch        # Watch for schema changes
+```
 
-## Cache Revalidation
+### Deployment
+```bash
+pnpm deploy               # Deploy to Vercel production
+pnpm deploy:preview       # Deploy to Vercel preview
+```
 
-All our GraphQL requests has the cache tag `wordpress` - when we update anything in WordPress, we call our `/api/revalidate` route, and revalidates the `wordpress` tag. In this way we ensure that everything is up to date, but only revalidate the cache when there actually are updates.
+## 🎯 Client Setup Checklist (For Agencies)
 
-## Template handling
+### WordPress Configuration
+- [ ] Install WPGraphQL plugin and verify GraphQL endpoint
+- [ ] Configure ACF fields and register with GraphQL (if applicable)  
+- [ ] Install and configure SEO plugin (Yoast/RankMath)
+- [ ] Set up WordPress Application Passwords for API access
+- [ ] Configure CORS headers for headless access
+- [ ] Install optional plugins (Redirection, Custom Post Types)
 
-We use an "Optional Catch-all Segment" for handling all WordPress content.
-When rendering this component we simply ask GraphQL "what type of content is this route?" and fetch the corresponding template.
-Each template can then have their own queries for fetching specific content for that template.
+### Next.js Configuration
+- [ ] Clone repository and install dependencies
+- [ ] Copy and configure environment variables
+- [ ] Generate GraphQL types from WordPress schema
+- [ ] Test local development server
+- [ ] Validate environment configuration
 
-## SEO
+### Content Migration
+- [ ] Import existing WordPress content
+- [ ] Configure custom post types and fields
+- [ ] Set up navigation menus
+- [ ] Configure media library and optimize images
+- [ ] Test content rendering in Next.js
 
-We are using Yoast SEO for handling SEO in WordPress, and then all routes are requesting the Yoast SEO object, and parsing this to a dynamic `generateMetadata()` function
+### SEO Setup
+- [ ] Configure site metadata and branding
+- [ ] Set up Google Analytics and Search Console
+- [ ] Verify structured data markup
+- [ ] Test social media sharing (Open Graph, Twitter Cards)
+- [ ] Configure XML sitemap generation
 
-## Folder structure
+### Performance Optimization
+- [ ] Configure image optimization settings
+- [ ] Set up CDN for WordPress media (optional)
+- [ ] Configure caching strategy
+- [ ] Test Core Web Vitals scores
+- [ ] Optimize bundle size and loading performance
 
-The boilerplate is structured as follows:
+### Deployment Preparation
+- [ ] Choose hosting platform (Vercel recommended)
+- [ ] Configure custom domain and SSL
+- [ ] Set up environment variables in hosting platform
+- [ ] Configure deployment scripts
+- [ ] Set up monitoring and error tracking
 
-- `app`: Contains the routes and pages of the application
-- `assets`: Contains helpful styles such as the variables
-- `components`: Contains the components used in the application
-- `gql`: Contains auto-generated types from GraphQL via CodeGen
-- `queries`: Contains reusable data fetch requests to GraphQL
-- `utils`: Contains helpful functions used across the application
+### Post-Launch
+- [ ] Test all functionality in production
+- [ ] Set up WordPress webhook for content updates
+- [ ] Configure backup and maintenance procedures
+- [ ] Train client on content management
+- [ ] Document custom features and configurations
 
-## WordPress theme functions.php
+## 🔐 Environment Variables Documentation
 
-This `functions.php` is implementing different useful features for using WordPress with Next.js:
+### Required Variables
 
-- Setting up a primary menu (fetched in `Navigation..tsx`)
-- Rewriting preview and rest links to match the frontend instead of the WordPress installation
-- Implementing cache tag revalidation everytime you update a post in WordPress
-- Implementing rest endpoints for sitemap generation
+```bash
+# WordPress Connection
+NEXT_PUBLIC_WORDPRESS_API_URL=https://your-wp-site.com
+NEXT_PUBLIC_WORDPRESS_API_HOSTNAME=your-wp-site.com
+NEXT_PUBLIC_BASE_URL=https://your-nextjs-site.com
+HEADLESS_SECRET=your-64-character-secret-token
 
+# Generate secure tokens
+openssl rand -hex 32  # For HEADLESS_SECRET
+```
+
+### Optional Variables
+
+```bash
+# Site Branding
+NEXT_PUBLIC_SITE_NAME="Your Site Name"
+NEXT_PUBLIC_SITE_DESCRIPTION="Your site description"
+NEXT_PUBLIC_LOCALE=en_US
+
+# WordPress Authentication (enables advanced features)
+WP_USER=your_wp_username
+WP_APP_PASS=your_wp_application_password
+
+# Preview Mode
+WORDPRESS_PREVIEW_SECRET=your-preview-secret
+
+# Analytics
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
+
+# Security & Performance
+WEBHOOK_ALLOWED_IPS=comma,separated,ips
+WEBHOOK_RATE_LIMIT_MAX=30
+WEBHOOK_RATE_LIMIT_WINDOW=60000
+WEBHOOK_LOG_ENABLED=true
+
+# External Services
+DATABASE_URL=postgresql://user:pass@host:5432/db
+REDIS_URL=redis://user:pass@host:6379
+SMTP_HOST=smtp.provider.com
+```
+
+## ⚙️ WordPress Configuration Guide
+
+### 1. Required Plugin Installation
+
+```bash
+# Install via WP-CLI
+wp plugin install wp-graphql --activate
+wp plugin install wp-graphql-acf --activate  # If using ACF
+wp plugin install wordpress-seo --activate   # Or rankmath
+
+# Or install via WordPress admin
+# Plugins → Add New → Search for each plugin
+```
+
+### 2. GraphQL Configuration
+
+Add to WordPress `wp-config.php`:
 ```php
-<?php
-/**
- * Registers new menus
- *
- * @return void
- */
-add_action('init', 'register_new_menu');
-function register_new_menu()
+// Enable GraphQL debugging (development only)
+define('GRAPHQL_DEBUG', true);
+
+// Configure CORS for headless access
+add_action('init', function() {
+    remove_action('rest_api_init', 'rest_cookie_collect_status');
+});
+
+add_action('rest_api_init', function() {
+    remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
+    add_filter('rest_pre_serve_request', function($value) {
+        header('Access-Control-Allow-Origin: https://your-nextjs-site.com');
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+        header('Access-Control-Allow-Credentials: true');
+        return $value;
+    });
+}, 15);
+```
+
+### 3. Create Application Password
+
+1. Go to WordPress Admin → Users → Your Profile
+2. Scroll to "Application Passwords" section
+3. Enter "Next.js Headless Site" as application name
+4. Click "Add New Application Password"
+5. Copy the generated password for `WP_APP_PASS`
+
+### 4. WordPress Plugin Integration
+
+Install the included WordPress plugin:
+1. Copy `wordpress-plugin/` to `/wp-content/plugins/nextjs-revalidation-webhook/`
+2. Activate in WordPress admin
+3. Configure under Settings → Next.js Webhook
+4. Set webhook URL: `https://your-nextjs-site.com/api/revalidate`
+5. Enter secret token matching `HEADLESS_SECRET`
+
+## 🚀 Vercel Deployment Instructions
+
+### Option 1: Deploy with Vercel CLI
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Login to Vercel
+vercel login
+
+# Deploy from project root
+vercel
+
+# Deploy to production
+vercel --prod
+```
+
+### Option 2: GitHub Integration
+
+1. Push code to GitHub repository
+2. Connect repository to Vercel dashboard
+3. Configure build settings:
+   - **Framework**: Next.js
+   - **Build Command**: `pnpm build:full`
+   - **Output Directory**: `.next`
+   - **Install Command**: `pnpm install --frozen-lockfile`
+
+### Environment Variables Setup
+
+Configure these in Vercel dashboard:
+
+**Production Environment:**
+- NEXT_PUBLIC_WORDPRESS_API_URL
+- NEXT_PUBLIC_BASE_URL (your custom domain)
+- HEADLESS_SECRET
+- All optional variables as needed
+
+**Build Optimization:**
+```json
 {
-  register_nav_menus(
-    array(
-      'primary-menu' => __('Primary menu')
-    )
-  );
-}
-
-/**
- * Changes the REST API root URL to use the home URL as the base.
- *
- * @param string $url The complete URL including scheme and path.
- * @return string The REST API root URL.
- */
-add_filter('rest_url', 'home_url_as_api_url');
-function home_url_as_api_url($url)
-{
-  $url = str_replace(home_url(), site_url(), $url);
-  return $url;
-}
-
-/**
- * Customize the preview button in the WordPress admin.
- *
- * This function modifies the preview link for a post to point to a headless client setup.
- *
- * @param string  $link Original WordPress preview link.
- * @param WP_Post $post Current post object.
- * @return string Modified headless preview link.
- */
-add_filter( 'preview_post_link', 'set_headless_preview_link', 10, 2 );
-function set_headless_preview_link( string $link, WP_Post $post ): string {
-	// Set the front-end preview route.
-  $frontendUrl = HEADLESS_URL;
-
-	// Update the preview link in WordPress.
-  return add_query_arg(
-    [
-      'secret' => HEADLESS_SECRET,
-      'id' => $post->ID,
-    ],
-    esc_url_raw( esc_url_raw( "$frontendUrl/api/preview" ))
-  );
-}
-
-add_filter( 'rest_prepare_page', 'set_headless_rest_preview_link', 10, 2 );
-add_filter( 'rest_prepare_post', 'set_headless_rest_preview_link' , 10, 2 );
-function set_headless_rest_preview_link( WP_REST_Response $response, WP_Post $post ): WP_REST_Response {
-  // Check if the post status is 'draft' and set the preview link accordingly.
-  if ( 'draft' === $post->post_status ) {
-    $response->data['link'] = get_preview_post_link( $post );
-    return $response;
-  }
-
-  // For published posts, modify the permalink to point to the frontend.
-  if ( 'publish' === $post->post_status ) {
-
-    // Get the post permalink.
-    $permalink = get_permalink( $post );
-
-    // Check if the permalink contains the site URL.
-    if ( false !== stristr( $permalink, get_site_url() ) ) {
-
-      $frontendUrl = HEADLESS_URL;
-
-      // Replace the site URL with the frontend URL.
-      $response->data['link'] = str_ireplace(
-        get_site_url(),
-        $frontendUrl,
-        $permalink
-      );
+  "buildCommand": "pnpm build:full",
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
     }
   }
-
-  return $response;
 }
-
-
-/**
- * Adds the headless_revalidate function to the save_post action hook.
- * This function makes a PUT request to the headless site' api/revalidate endpoint with JSON body: paths = ['/path/to/page', '/path/to/another/page']
- * Requires HEADLESS_URL and HEADLESS_SECRET to be defined in wp-config.php
- *
- * @param int $post_ID The ID of the post being saved.
- * @return void
- */
-add_action('transition_post_status', 'headless_revalidate', 10, 3);
-function headless_revalidate(string $new_status, string $old_status, object $post ): void
-{
-  if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
-    return;
-  }
-
-  // Ignore drafts and inherited posts.
-  if ( ( 'draft' === $new_status && 'draft' === $old_status ) || 'inherit' === $new_status ) {
-    return;
-  }
-
-  $frontendUrl = HEADLESS_URL;
-  $headlessSecret = HEADLESS_SECRET;
-
-  $data = json_encode([
-    'tags'  => ['wordpress'],
-  ]);
-
-  $response = wp_remote_request("$frontendUrl/api/revalidate/", [
-    'method'  => 'PUT',
-    'body'    => $data,
-    'headers' => [
-      'X-Headless-Secret-Key' => $headlessSecret,
-      'Content-Type'  => 'application/json',
-    ],
-  ]);
-
-  // Check if the request was successful
-  if (is_wp_error($response)) {
-    // Handle error
-    error_log($response->get_error_message());
-  }
-}
-
-function wsra_get_user_inputs()
-{
-  $pageNo = sprintf("%d", $_GET['pageNo']);
-  $perPage = sprintf("%d", $_GET['perPage']);
-  // Check for array key taxonomyType
-  if (array_key_exists('taxonomyType', $_GET)) {
-    $taxonomy = $_GET['taxonomyType'];
-  } else {
-    $taxonomy = 'category';
-  }
-  $postType = $_GET['postType'];
-  $paged = $pageNo ? $pageNo : 1;
-  $perPage = $perPage ? $perPage : 100;
-  $offset = ($paged - 1) * $perPage;
-  $args = array(
-    'number' => $perPage,
-    'offset' => $offset,
-  );
-  $postArgs = array(
-    'posts_per_page' => $perPage,
-    'post_type' => strval($postType ? $postType : 'post'),
-    'paged' => $paged,
-  );
-
-  return [$args, $postArgs, $taxonomy];
-}
-
-function wsra_generate_author_api()
-{
-  [$args] = wsra_get_user_inputs();
-  $author_urls = array();
-  $authors =  get_users($args);
-  foreach ($authors as $author) {
-    $fullUrl = esc_url(get_author_posts_url($author->ID));
-    $url = str_replace(home_url(), '', $fullUrl);
-    $tempArray = [
-      'url' => $url,
-    ];
-    array_push($author_urls, $tempArray);
-  }
-  return array_merge($author_urls);
-}
-
-function wsra_generate_taxonomy_api()
-{
-  [$args,, $taxonomy] = wsra_get_user_inputs();
-  $taxonomy_urls = array();
-  $taxonomys = $taxonomy == 'tag' ? get_tags($args) : get_categories($args);
-  foreach ($taxonomys as $taxonomy) {
-    $fullUrl = esc_url(get_category_link($taxonomy->term_id));
-    $url = str_replace(home_url(), '', $fullUrl);
-    $tempArray = [
-      'url' => $url,
-    ];
-    array_push($taxonomy_urls, $tempArray);
-  }
-  return array_merge($taxonomy_urls);
-}
-
-function wsra_generate_posts_api()
-{
-  [, $postArgs] = wsra_get_user_inputs();
-  $postUrls = array();
-  $query = new WP_Query($postArgs);
-
-  while ($query->have_posts()) {
-    $query->the_post();
-    $uri = str_replace(home_url(), '', get_permalink());
-    $tempArray = [
-      'url' => $uri,
-      'post_modified_date' => get_the_modified_date(),
-    ];
-    array_push($postUrls, $tempArray);
-  }
-  wp_reset_postdata();
-  return array_merge($postUrls);
-}
-
-function wsra_generate_totalpages_api()
-{
-  $args = array(
-    'exclude_from_search' => false
-  );
-  $argsTwo = array(
-    'publicly_queryable' => true
-  );
-  $post_types = get_post_types($args, 'names');
-  $post_typesTwo = get_post_types($argsTwo, 'names');
-  $post_types = array_merge($post_types, $post_typesTwo);
-  unset($post_types['attachment']);
-  $defaultArray = [
-    'category' => count(get_categories()),
-    'tag' => count(get_tags()),
-    'user' => (int)count_users()['total_users'],
-  ];
-  $tempValueHolder = array();
-  foreach ($post_types as $postType) {
-    $tempValueHolder[$postType] = (int)wp_count_posts($postType)->publish;
-  }
-  return array_merge($defaultArray, $tempValueHolder);
-}
-
-add_action('rest_api_init', function () {
-  register_rest_route('sitemap/v1', '/posts', array(
-    'methods' => 'GET',
-    'callback' => 'wsra_generate_posts_api',
-  ));
-});
-add_action('rest_api_init', function () {
-  register_rest_route('sitemap/v1', '/taxonomy', array(
-    'methods' => 'GET',
-    'callback' => 'wsra_generate_taxonomy_api',
-  ));
-});
-add_action('rest_api_init', function () {
-  register_rest_route('sitemap/v1', '/author', array(
-    'methods' => 'GET',
-    'callback' => 'wsra_generate_author_api',
-  ));
-});
-add_action('rest_api_init', function () {
-  register_rest_route('sitemap/v1', '/totalpages', array(
-    'methods' => 'GET',
-    'callback' => 'wsra_generate_totalpages_api',
-  ));
-});
-
 ```
+
+### Custom Domain Configuration
+
+```bash
+# Add domain via CLI
+vercel domains add your-domain.com
+
+# Configure DNS (A record)
+Type: A
+Name: @
+Value: 76.76.19.61
+
+# Update environment variables with new domain
+NEXT_PUBLIC_BASE_URL=https://your-domain.com
+```
+
+## 📚 Component API Documentation
+
+### BlockRenderer Component
+
+The core component for rendering WordPress blocks:
+
+```tsx
+import BlockRenderer from '@/components/BlockRenderer';
+
+<BlockRenderer 
+  content={wordpressContent}           // WordPress HTML content
+  blocks={parsedBlocks}               // Pre-parsed block array
+  className="my-blocks"               // CSS class
+  options={{
+    allowedBlocks: ['core/paragraph'], // Whitelist blocks
+    validateAttributes: true,          // Validate block data
+    stripInvalidBlocks: true          // Remove invalid blocks
+  }}
+  fallbackComponent={CustomError}     // Custom error component
+  onBlockError={(error, block) => {}} // Error handler
+/>
+```
+
+### WordPress Data Hooks
+
+Custom hooks for fetching WordPress data:
+
+```tsx
+import { 
+  useContentNode, 
+  usePosts, 
+  useSearch, 
+  useMenu,
+  useSiteSettings 
+} from '@/hooks/useWordPress';
+
+// Get single content node
+const { contentNode, loading, error } = useContentNode(slug);
+
+// Get posts with pagination
+const { posts, pageInfo, loading } = usePosts({ first: 10 });
+
+// Search content
+const { results, loading } = useSearch(query);
+
+// Get navigation menu
+const { menuItems, loading } = useMenu('PRIMARY');
+
+// Get site settings
+const { settings, loading } = useSiteSettings();
+```
+
+### Template Components
+
+Pre-built templates for WordPress content:
+
+```tsx
+import { PageTemplate } from '@/components/Templates/Page';
+import { PostTemplate } from '@/components/Templates/Post';
+
+<PageTemplate 
+  page={pageData}
+  className="custom-page"
+/>
+
+<PostTemplate 
+  post={postData}
+  showAuthor={true}
+  showDate={true}
+/>
+```
+
+## 🎨 Customization and Theming Guide
+
+### Tailwind CSS Configuration
+
+The project uses Tailwind CSS 4 with CSS variables for theming:
+
+```css
+/* src/app/globals.css */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 3.9%;
+  --primary: 0 0% 9%;
+  --secondary: 0 0% 96.1%;
+  /* ... more variables */
+}
+
+.dark {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  /* ... dark theme variables */
+}
+```
+
+### Adding Custom Blocks
+
+1. Create block component:
+```tsx
+// src/components/BlockRenderer/blocks/custom/MyBlock.tsx
+import { BlockComponentProps } from '@/types/blocks';
+
+export function MyCustomBlock({ attributes }: BlockComponentProps) {
+  return (
+    <div className="my-custom-block">
+      <h3>{attributes.title}</h3>
+      <p>{attributes.content}</p>
+    </div>
+  );
+}
+```
+
+2. Register the block:
+```tsx
+// src/components/BlockRenderer/registerBlocks.ts
+import { BlockRegistry } from '@/components/BlockRegistry';
+
+BlockRegistry.registerBlock({
+  name: 'custom/my-block',
+  component: MyCustomBlock,
+  category: 'custom'
+});
+```
+
+### Custom Styling
+
+Add custom styles using Tailwind utilities or custom CSS:
+
+```tsx
+// Component with Tailwind
+<div className="bg-primary text-primary-foreground rounded-lg p-6">
+  Custom styled content
+</div>
+
+// Custom CSS classes
+<div className="hero-section">
+  <style jsx>{`
+    .hero-section {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+  `}</style>
+</div>
+```
+
+### Theme Customization
+
+Extend the default theme in `tailwind.config.ts`:
+
+```typescript
+export default {
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          50: '#f0f9ff',
+          500: '#3b82f6',
+          900: '#1e3a8a',
+        }
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      }
+    }
+  }
+}
+```
+
+## 🤝 Contributing Guidelines
+
+### Development Setup
+
+1. Fork and clone the repository
+2. Install dependencies: `pnpm install`
+3. Set up environment variables
+4. Run tests: `pnpm test`
+5. Start development server: `pnpm dev`
+
+### Code Standards
+
+- **TypeScript**: Strict mode enabled, comprehensive typing required
+- **Testing**: 80% coverage minimum, all new features must include tests
+- **Linting**: ESLint configuration must pass with zero warnings
+- **Commits**: Use conventional commit format
+
+### Pull Request Process
+
+1. Create feature branch: `git checkout -b feature/amazing-feature`
+2. Make changes and add tests
+3. Ensure all tests pass: `pnpm test:all`
+4. Update documentation if needed
+5. Submit pull request with detailed description
+
+### Testing Requirements
+
+- Unit tests for utilities and hooks
+- Component tests for React components
+- Integration tests for API endpoints
+- E2E tests for user workflows
+
+## 🔍 Troubleshooting Section
+
+### Common Issues
+
+#### Build Failures
+```bash
+# Clear cache and rebuild
+pnpm clean
+pnpm install --frozen-lockfile
+pnpm build:full
+```
+
+#### WordPress Connection Issues
+- Verify GraphQL endpoint: `https://your-wp-site.com/graphql`
+- Check WPGraphQL plugin is active and updated
+- Verify CORS settings in WordPress
+- Test with GraphiQL interface
+
+#### Environment Variable Problems
+```bash
+# Validate environment
+pnpm validate-env
+
+# Check specific variables
+echo $NEXT_PUBLIC_WORDPRESS_API_URL
+```
+
+#### TypeScript Errors
+```bash
+# Regenerate types from WordPress
+pnpm codegen
+
+# Check TypeScript compilation
+pnpm type-check
+```
+
+#### Performance Issues
+```bash
+# Analyze bundle size
+pnpm build:analyze
+
+# Test production build locally
+pnpm build:production && pnpm start
+```
+
+### Debug Commands
+
+```bash
+# View detailed error logs
+pnpm dev --debug
+
+# Test specific components
+pnpm test ComponentName
+
+# Validate configuration
+pnpm validate-env:production
+
+# Check webhook functionality
+curl -X POST https://your-site.com/api/revalidate \
+  -H "X-Headless-Secret-Key: your-secret" \
+  -d '{"test": true}'
+```
+
+### Getting Help
+
+1. **Check logs first**: Review build/deployment logs for specific errors
+2. **Verify environment**: Ensure all required environment variables are set
+3. **Test locally**: Reproduce issues in local development environment
+4. **Review documentation**: Check specific feature documentation
+5. **Community support**: GitHub issues and discussions
+
+---
+
+## 🏢 About MalTar Designs
+
+**Professional WordPress & Next.js Development Services**
+
+MalTar Designs specializes in modern web development with WordPress headless CMS solutions. We help agencies and businesses build high-performance, scalable websites with cutting-edge technologies.
+
+### Our Services
+- ✅ **Headless WordPress Development** - Custom Next.js + WordPress solutions
+- ✅ **Agency Partnerships** - White-label development services
+- ✅ **Template Customization** - Tailored implementations for your clients
+- ✅ **Performance Optimization** - Speed and SEO improvements
+- ✅ **Ongoing Maintenance** - Technical support and updates
+
+### Why This Template?
+
+We built this enhanced template to solve real-world challenges we encounter in client projects:
+- **Enterprise-grade security** with comprehensive rate limiting and validation
+- **Advanced content management** with flexible block rendering system
+- **Production-ready testing** with automated quality assurance
+- **Client-focused workflows** with streamlined setup and deployment
+- **Performance optimizations** that deliver measurable results
+
+### Get Professional Help
+
+Need help implementing this template or building a custom solution?
+
+📧 **Email**: [contact@maltardesigns.com](mailto:contact@maltardesigns.com)  
+🌐 **Website**: [maltardesigns.com](https://maltardesigns.com)  
+💼 **LinkedIn**: [MalTar Designs](https://linkedin.com/company/maltar-designs)  
+
+*We offer free consultations for agencies and businesses looking to modernize their WordPress workflows.*
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Next.js team** for the exceptional framework and App Router
+- **WordPress and WPGraphQL** communities for headless CMS capabilities
+- **Vercel** for deployment platform and optimization tools
+- **Tailwind CSS** and **Radix UI** for design system components
+- **TypeScript** team for type safety and developer experience
+
+---
+
+**Ready to build something amazing? Get started with the Quick Start guide above!**
+
+For detailed implementation guides, see:
+- [DEPLOYMENT.md](./DEPLOYMENT.md) - Complete deployment guide
+- [TAILWIND_SETUP.md](./TAILWIND_SETUP.md) - Styling and theming
+- [docs/WEBHOOK_SYSTEM.md](./docs/WEBHOOK_SYSTEM.md) - Webhook integration
+- [TESTING.md](./TESTING.md) - Testing strategies
+
+**Built with ❤️ for the WordPress and Next.js communities**
