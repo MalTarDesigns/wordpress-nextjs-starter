@@ -1,6 +1,6 @@
 import { print } from "graphql/language/printer";
 import gql from "graphql-tag";
-import { ContentNode } from "@/gql/graphql";
+import { type ContentNode } from "@/gql/graphql";
 import { fetchGraphQL } from "@/utils/fetchGraphQL";
 import { draftMode } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
     const secret = searchParams.get("secret");
     const id = searchParams.get("id");
     const timestamp = searchParams.get("timestamp");
-    const clientIP = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+    const clientIP = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
 
     // Rate limiting
     if (!checkRateLimit(clientIP)) {
@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Enable draft mode
-    draftMode().enable();
+    (await draftMode()).enable();
 
     // Query content node with enhanced data
     const query = gql`
@@ -137,18 +137,18 @@ export async function GET(request: NextRequest) {
     }
 
     // Validate content access permissions
-    if (contentNode.status === "private" && !userRoles.canViewPrivate) {
+    if ('status' in contentNode && contentNode.status === "private" && !userRoles.canViewPrivate) {
       console.error("User cannot access private content");
       return new NextResponse("Cannot access private content", { status: 403 });
     }
 
     // Determine preview URL based on content status and type
     let previewPath: string;
-    const contentType = contentNode.contentType?.node?.name?.toLowerCase() || "unknown";
+    const contentType = (contentNode as any).contentType?.node?.name?.toLowerCase() || "unknown";
     
-    if (contentNode.status === "draft" || contentNode.status === "pending") {
+    if ('status' in contentNode && (contentNode.status === "draft" || contentNode.status === "pending")) {
       previewPath = `/preview/${contentNode.databaseId}`;
-    } else if (contentNode.status === "private") {
+    } else if ((contentNode as any).status === "private") {
       previewPath = `/private/${contentNode.databaseId}`;
     } else {
       previewPath = contentNode.uri || `/preview/${contentNode.databaseId}`;
@@ -158,11 +158,11 @@ export async function GET(request: NextRequest) {
     const previewUrl = new URL(previewPath, envConfig.site.baseUrl);
     previewUrl.searchParams.set("preview", "true");
     previewUrl.searchParams.set("type", contentType);
-    previewUrl.searchParams.set("status", contentNode.status || "unknown");
+    previewUrl.searchParams.set("status", (contentNode as any).status || "unknown");
 
     console.log("Redirecting to preview URL", { 
       contentId: id, 
-      status: contentNode.status, 
+      status: (contentNode as any).status, 
       type: contentType,
       previewPath 
     });

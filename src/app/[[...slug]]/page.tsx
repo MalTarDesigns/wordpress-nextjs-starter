@@ -102,7 +102,7 @@ export async function generateMetadata({
               content: contentData,
               canonical,
             },
-            contentNode.seo?.breadcrumbs
+            contentNode.seo?.breadcrumbs?.filter((item): item is { text: string; url?: string } => Boolean(item.text))
           )
         ),
       },

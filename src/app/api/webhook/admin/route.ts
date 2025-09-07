@@ -9,7 +9,7 @@ import type { WebhookSecurityConfig } from '@/types/wordpress';
 function initializeWebhookComponents() {
   const config: WebhookSecurityConfig = {
     secretToken: process.env.HEADLESS_SECRET || '',
-    allowedIPs: process.env.WEBHOOK_ALLOWED_IPS?.split(',').map(ip => ip.trim()),
+    ...(process.env.WEBHOOK_ALLOWED_IPS && { allowedIPs: process.env.WEBHOOK_ALLOWED_IPS.split(',').map(ip => ip.trim()) }),
     rateLimitMaxRequests: parseInt(process.env.WEBHOOK_RATE_LIMIT_MAX || '30', 10),
     rateLimitWindowMs: parseInt(process.env.WEBHOOK_RATE_LIMIT_WINDOW || '60000', 10),
   };

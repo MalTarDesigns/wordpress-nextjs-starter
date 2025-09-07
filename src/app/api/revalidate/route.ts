@@ -24,7 +24,7 @@ function initializeWebhookComponents(): {
   if (!webhookSecurity || !webhookLogger || !revalidator) {
     const config: WebhookSecurityConfig = {
       secretToken: process.env.HEADLESS_SECRET || '',
-      allowedIPs: process.env.WEBHOOK_ALLOWED_IPS?.split(',').map(ip => ip.trim()) || undefined,
+      ...(process.env.WEBHOOK_ALLOWED_IPS && { allowedIPs: process.env.WEBHOOK_ALLOWED_IPS.split(',').map(ip => ip.trim()) }),
       rateLimitMaxRequests: parseInt(process.env.WEBHOOK_RATE_LIMIT_MAX || '30', 10),
       rateLimitWindowMs: parseInt(process.env.WEBHOOK_RATE_LIMIT_WINDOW || '60000', 10),
     };
@@ -133,7 +133,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse<Revalidati
   
   // Extract request metadata
   const clientIP = (request as any).ip || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
-  const userAgent = request.headers.get('user-agent');
+  const userAgent = request.headers.get('user-agent') || 'unknown';
   
   try {
     // Security validation
@@ -230,8 +230,8 @@ export async function PUT(request: NextRequest): Promise<NextResponse<Revalidati
       { ip: clientIP, method: request.method, path: request.nextUrl.pathname, userAgent },
       { statusCode, processingTimeMs: processingTime },
       {
-        contentType: revalidationData.contentType,
-        action: revalidationData.action,
+        ...(revalidationData.contentType && { contentType: revalidationData.contentType }),
+        ...(revalidationData.action && { action: revalidationData.action }),
         pathsRevalidated: revalidationResult.pathsRevalidated.length,
         tagsRevalidated: revalidationResult.tagsRevalidated.length,
         errors: revalidationResult.errors,
@@ -248,8 +248,8 @@ export async function PUT(request: NextRequest): Promise<NextResponse<Revalidati
       metadata: {
         processingTimeMs: processingTime,
         requestId,
-        contentType: revalidationData.contentType,
-        action: revalidationData.action,
+        ...(revalidationData.contentType && { contentType: revalidationData.contentType }),
+        ...(revalidationData.action && { action: revalidationData.action }),
         revalidatedCount: revalidationResult.pathsRevalidated.length + revalidationResult.tagsRevalidated.length,
       },
     };
@@ -299,8 +299,8 @@ export async function POST(request: NextRequest): Promise<NextResponse<Revalidat
   const requestId = generateRequestId();
   const { security, logger, revalidator } = initializeWebhookComponents();
   
-  const clientIP = request.ip || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
-  const userAgent = request.headers.get('user-agent');
+  const clientIP = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || 'unknown';
+  const userAgent = request.headers.get('user-agent') || 'unknown';
   
   try {
     // Security validation
@@ -367,7 +367,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<Revalidat
       { ip: clientIP, method: request.method, path: request.nextUrl.pathname, userAgent },
       { statusCode, processingTimeMs: processingTime },
       {
-        contentType: wordpressPayload.post_type,
+        ...(wordpressPayload.post_type && { contentType: wordpressPayload.post_type }),
         action: wordpressPayload.action,
         pathsRevalidated: revalidationResult.pathsRevalidated.length,
         tagsRevalidated: revalidationResult.tagsRevalidated.length,
@@ -384,7 +384,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<Revalidat
       metadata: {
         processingTimeMs: processingTime,
         requestId,
-        contentType: wordpressPayload.post_type,
+        ...(wordpressPayload.post_type && { contentType: wordpressPayload.post_type }),
         action: wordpressPayload.action,
         revalidatedCount: revalidationResult.pathsRevalidated.length + revalidationResult.tagsRevalidated.length,
       },

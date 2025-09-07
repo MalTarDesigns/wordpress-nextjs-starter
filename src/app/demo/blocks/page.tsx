@@ -9,7 +9,7 @@ import { ACFCTASection } from '@/components/BlockRenderer/blocks/acf/CTASection'
 
 export default function BlocksDemo() {
   // Demo block mock
-  const mockBlock = { name: 'demo-block' };
+  const mockBlock = { name: 'demo-block' } as any;
 
   return (
     <div className="min-h-screen bg-background">

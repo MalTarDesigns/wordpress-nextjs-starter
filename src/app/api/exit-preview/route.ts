@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Disable draft mode
-    draftMode().disable();
+    (await draftMode()).disable();
 
     // Create redirect response
     const redirectUrl = new URL(path, envConfig.site.baseUrl);
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     const { returnPath } = await request.json();
     
     // Disable draft mode
-    draftMode().disable();
+    (await draftMode()).disable();
 
     // Clear preview cookies
     const response = NextResponse.json({ success: true, redirected: false });
