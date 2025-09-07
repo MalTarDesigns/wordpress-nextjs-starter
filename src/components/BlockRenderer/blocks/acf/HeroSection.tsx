@@ -8,6 +8,8 @@ import type { BlockComponentProps } from '@/types/blocks';
 import { cn } from '@/lib/utils';
 
 interface HeroSectionBlock {
+  acf_fc_layout: string;
+  name: string;
   title?: string;
   subtitle?: string;
   description?: string;
@@ -27,7 +29,7 @@ interface HeroSectionBlock {
     title: string;
     url: string;
     target?: string;
-    style?: 'primary' | 'secondary' | 'outline' | 'ghost';
+    style?: 'default' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link';
   }>;
   text_color?: 'light' | 'dark' | 'auto';
   enable_parallax?: boolean;
@@ -95,7 +97,7 @@ export function ACFHeroSection({
         return (
           <div className="container mx-auto px-4 h-full">
             <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center h-full">
-              <div className={cn("space-y-6", alignmentClasses[text_alignment])}>
+              <div className={cn("space-y-6", alignmentClasses[(text_alignment || 'left') as keyof typeof alignmentClasses])}>
                 {badge_text && (
                   <span className={cn(
                     "inline-block px-4 py-1.5 rounded-full text-sm font-medium",
@@ -144,7 +146,7 @@ export function ACFHeroSection({
           <div className="container mx-auto px-4">
             <div className={cn(
               "max-w-4xl mx-auto space-y-8",
-              alignmentClasses[text_alignment]
+              alignmentClasses[(text_alignment || 'left') as keyof typeof alignmentClasses]
             )}>
               {badge_text && (
                 <span className={cn(
@@ -176,7 +178,7 @@ export function ACFHeroSection({
           <div className="container mx-auto px-4 h-full flex items-center justify-center">
             <div className={cn(
               "max-w-5xl w-full space-y-8",
-              alignmentClasses[text_alignment]
+              alignmentClasses[(text_alignment || 'left') as keyof typeof alignmentClasses]
             )}>
               {badge_text && (
                 <span className={cn(
@@ -228,7 +230,7 @@ export function ACFHeroSection({
           <div className="container mx-auto px-4">
             <div className={cn(
               "max-w-5xl mx-auto space-y-6",
-              alignmentClasses[text_alignment]
+              alignmentClasses[(text_alignment || 'left') as keyof typeof alignmentClasses]
             )}>
               {badge_text && (
                 <span className={cn(
@@ -282,7 +284,7 @@ export function ACFHeroSection({
         text_alignment === 'center' && "justify-center",
         text_alignment === 'right' && "justify-end"
       )}>
-        {cta_buttons.map((button, index) => (
+        {cta_buttons.map((button: { title: string; url: string; target?: string; style?: 'default' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link' }, index: number) => (
           <Button
             key={index}
             variant={button.style || (index === 0 ? 'default' : 'outline')}
@@ -315,7 +317,7 @@ export function ACFHeroSection({
         text_alignment === 'center' && "justify-center",
         text_alignment === 'right' && "justify-end"
       )}>
-        {features.map((feature, index) => (
+        {features.map((feature: { icon?: string; text: string }, index: number) => (
           <div key={index} className="flex items-center gap-2">
             {feature.icon && (
               <span className={cn(
@@ -342,7 +344,7 @@ export function ACFHeroSection({
     <section 
       className={cn(
         "wp-block-acf-hero-section relative flex items-center overflow-hidden",
-        heightClasses[height],
+        heightClasses[(height || 'medium') as keyof typeof heightClasses],
         enable_parallax && "parallax-container",
         className
       )}

@@ -25,6 +25,8 @@ interface Testimonial {
 }
 
 interface TestimonialSectionBlock {
+  acf_fc_layout: string;
+  name: string;
   testimonials?: Testimonial[];
   layout?: 'grid' | 'carousel' | 'masonry' | 'featured';
   columns?: number;
@@ -71,6 +73,7 @@ export function ACFTestimonialSection({
       
       return () => clearInterval(interval);
     }
+    return undefined;
   }, [layout, auto_rotate, rotation_interval, testimonials.length]);
 
   // Card style classes
@@ -222,7 +225,7 @@ export function ACFTestimonialSection({
                 className="flex transition-transform duration-500 ease-in-out"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
               >
-                {testimonials.map((testimonial, index) => (
+                {testimonials.map((testimonial: Testimonial, index: number) => (
                   <div key={index} className="w-full flex-shrink-0 px-4">
                     {renderTestimonialCard(testimonial, index)}
                   </div>
@@ -256,7 +259,7 @@ export function ACFTestimonialSection({
                 
                 {/* Dots */}
                 <div className="flex justify-center gap-2 mt-8">
-                  {testimonials.map((_, index) => (
+                  {testimonials.map((_: Testimonial, index: number) => (
                     <button
                       key={index}
                       className={cn(
@@ -278,7 +281,7 @@ export function ACFTestimonialSection({
       case 'masonry':
         return (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6">
-            {testimonials.map((testimonial, index) => (
+            {testimonials.map((testimonial: Testimonial, index: number) => (
               <div key={index} className="break-inside-avoid mb-6">
                 {renderTestimonialCard(testimonial, index)}
               </div>
@@ -299,7 +302,7 @@ export function ACFTestimonialSection({
             
             {/* Other testimonials */}
             <div className="space-y-6">
-              {others.slice(0, 2).map((testimonial, index) => (
+              {others.slice(0, 2).map((testimonial: Testimonial, index: number) => (
                 <div key={index + 1}>
                   {renderTestimonialCard(testimonial, index + 1)}
                 </div>
@@ -318,7 +321,7 @@ export function ACFTestimonialSection({
             columns === 3 && "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
             columns === 4 && "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
           )}>
-            {testimonials.map((testimonial, index) => (
+            {testimonials.map((testimonial: Testimonial, index: number) => (
               <div key={index}>
                 {renderTestimonialCard(testimonial, index)}
               </div>

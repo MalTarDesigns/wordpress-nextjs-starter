@@ -18,6 +18,8 @@ interface FAQItem {
 }
 
 interface FAQSectionBlock {
+  acf_fc_layout: string;
+  name: string;
   faqs?: FAQItem[];
   title?: string;
   subtitle?: string;
@@ -61,7 +63,7 @@ export function ACFFAQSection({
 
   // Get unique categories from FAQs
   const availableCategories = React.useMemo(() => {
-    const cats = new Set(faqs.map(faq => faq.category).filter(Boolean));
+    const cats = new Set(faqs.map((faq: FAQItem) => faq.category).filter(Boolean));
     return Array.from(cats) as string[];
   }, [faqs]);
 
@@ -71,7 +73,7 @@ export function ACFFAQSection({
 
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(faq => 
+      filtered = filtered.filter((faq: FAQItem) => 
         faq.question.toLowerCase().includes(term) ||
         faq.answer.toLowerCase().includes(term) ||
         (faq.tags && faq.tags.some(tag => tag.toLowerCase().includes(term)))
@@ -79,7 +81,7 @@ export function ACFFAQSection({
     }
 
     if (selectedCategory) {
-      filtered = filtered.filter(faq => faq.category === selectedCategory);
+      filtered = filtered.filter((faq: FAQItem) => faq.category === selectedCategory);
     }
 
     return filtered;
@@ -145,7 +147,7 @@ export function ACFFAQSection({
       case 'cards':
         return (
           <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
-            {filteredFAQs.map((faq, index) => {
+            {filteredFAQs.map((faq: FAQItem, index: number) => {
               const isExpanded = expandedItems.includes(faq.id || index.toString());
               
               return (
@@ -238,7 +240,7 @@ export function ACFFAQSection({
                 className="w-full"
                 defaultValue={default_expanded}
               >
-                {leftColumn.map((faq, index) => (
+                {leftColumn.map((faq: FAQItem, index: number) => (
                   <AccordionItem 
                     key={faq.id || `left-${index}`}
                     value={faq.id || `left-${index}`}
@@ -271,7 +273,7 @@ export function ACFFAQSection({
                 className="w-full"
                 defaultValue={default_expanded}
               >
-                {rightColumn.map((faq, index) => (
+                {rightColumn.map((faq: FAQItem, index: number) => (
                   <AccordionItem 
                     key={faq.id || `right-${index}`}
                     value={faq.id || `right-${index}`}
@@ -309,7 +311,7 @@ export function ACFFAQSection({
               className="w-full"
               defaultValue={default_expanded}
             >
-              {filteredFAQs.map((faq, index) => (
+              {filteredFAQs.map((faq: FAQItem, index: number) => (
                 <AccordionItem 
                   key={faq.id || index}
                   value={faq.id || index.toString()}

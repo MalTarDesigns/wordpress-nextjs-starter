@@ -20,6 +20,8 @@ interface GalleryImage {
 }
 
 interface ImageGalleryBlock {
+  acf_fc_layout: string;
+  name: string;
   images?: GalleryImage[];
   layout?: 'grid' | 'masonry' | 'carousel' | 'justified';
   columns?: number;
@@ -153,9 +155,9 @@ export function ACFImageGallery({
         return (
           <div className={cn(
             "columns-1 md:columns-2 lg:columns-3 xl:columns-4",
-            gapClasses[gap]
+            gapClasses[(gap || 'medium') as keyof typeof gapClasses]
           )}>
-            {images.map((image, index) => (
+            {images.map((image: GalleryImage, index: number) => (
               <div
                 key={image.id || index}
                 className={cn(
@@ -174,8 +176,8 @@ export function ACFImageGallery({
         return (
           <div className="relative">
             <div className="overflow-x-auto pb-4">
-              <div className={cn("flex", gapClasses[gap])}>
-                {images.map((image, index) => (
+              <div className={cn("flex", gapClasses[(gap || 'medium') as keyof typeof gapClasses])}>
+                {images.map((image: GalleryImage, index: number) => (
                   <div
                     key={image.id || index}
                     className={cn(
@@ -194,8 +196,8 @@ export function ACFImageGallery({
 
       case 'justified':
         return (
-          <div className={cn("flex flex-wrap", gapClasses[gap])}>
-            {images.map((image, index) => {
+          <div className={cn("flex flex-wrap", gapClasses[(gap || 'medium') as keyof typeof gapClasses])}>
+            {images.map((image: GalleryImage, index: number) => {
               const aspectRatio = (image.width || 1) / (image.height || 1);
               const flexGrow = Math.round(aspectRatio * 100);
               
@@ -222,9 +224,9 @@ export function ACFImageGallery({
           <div className={cn(
             "grid",
             getGridClasses(),
-            gapClasses[gap]
+            gapClasses[(gap || 'medium') as keyof typeof gapClasses]
           )}>
-            {images.map((image, index) => (
+            {images.map((image: GalleryImage, index: number) => (
               <div
                 key={image.id || index}
                 className={cn(

@@ -13,7 +13,7 @@ interface CTAButton {
   title: string;
   url: string;
   target?: string;
-  style?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
+  style?: 'default' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link';
   icon?: 'arrow' | 'star' | 'check' | 'trending' | 'zap' | 'none';
 }
 
@@ -24,6 +24,8 @@ interface Feature {
 }
 
 interface CTASectionBlock {
+  acf_fc_layout: string;
+  name: string;
   title?: string;
   subtitle?: string;
   description?: string;
@@ -143,7 +145,7 @@ export function ACFCTASection({
         text_alignment === 'center' && "justify-center",
         text_alignment === 'right' && "justify-end"
       )}>
-        {buttons.map((button, index) => {
+        {buttons.map((button: CTAButton, index: number) => {
           const IconComponent = button.icon && button.icon !== 'none' ? getIcon(button.icon) : null;
           
           return (
@@ -185,7 +187,7 @@ export function ACFCTASection({
         features.length === 2 && "grid-cols-1 sm:grid-cols-2",
         features.length >= 3 && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
       )}>
-        {features.map((feature, index) => (
+        {features.map((feature: Feature, index: number) => (
           <div key={index} className="flex items-center gap-3">
             {feature.icon && (
               <span className="text-2xl">{feature.icon}</span>
@@ -296,7 +298,7 @@ export function ACFCTASection({
       case 'split':
         return (
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className={cn("space-y-6", alignmentClasses[text_alignment])}>
+            <div className={cn("space-y-6", alignmentClasses[(text_alignment || 'left') as keyof typeof alignmentClasses])}>
               {contentElements}
               {renderButtons()}
               {renderSocialProof()}
@@ -311,7 +313,7 @@ export function ACFCTASection({
         return (
           <Card className="max-w-4xl mx-auto overflow-hidden">
             <CardContent className="p-8 lg:p-12">
-              <div className={cn("space-y-6", alignmentClasses[text_alignment])}>
+              <div className={cn("space-y-6", alignmentClasses[(text_alignment || 'left') as keyof typeof alignmentClasses])}>
                 {contentElements}
                 {renderButtons()}
                 {renderFeatures()}
@@ -326,7 +328,7 @@ export function ACFCTASection({
           <div className={cn(
             "flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8"
           )}>
-            <div className={cn("flex-grow", alignmentClasses[text_alignment])}>
+            <div className={cn("flex-grow", alignmentClasses[(text_alignment || 'left') as keyof typeof alignmentClasses])}>
               {contentElements}
               {renderSocialProof()}
             </div>
@@ -338,7 +340,7 @@ export function ACFCTASection({
 
       case 'minimal':
         return (
-          <div className={cn("max-w-2xl mx-auto space-y-4", alignmentClasses[text_alignment])}>
+          <div className={cn("max-w-2xl mx-auto space-y-4", alignmentClasses[(text_alignment || 'left') as keyof typeof alignmentClasses])}>
             {title && (
               <h2 className={cn("text-2xl md:text-3xl font-bold", textColor)}>
                 {title}
@@ -353,7 +355,7 @@ export function ACFCTASection({
       case 'features':
         return (
           <div className="space-y-8">
-            <div className={cn("max-w-3xl mx-auto space-y-6", alignmentClasses[text_alignment])}>
+            <div className={cn("max-w-3xl mx-auto space-y-6", alignmentClasses[(text_alignment || 'left') as keyof typeof alignmentClasses])}>
               {contentElements}
               {renderButtons()}
             </div>
@@ -365,7 +367,7 @@ export function ACFCTASection({
       case 'centered':
       default:
         return (
-          <div className={cn("max-w-4xl mx-auto space-y-6", alignmentClasses[text_alignment])}>
+          <div className={cn("max-w-4xl mx-auto space-y-6", alignmentClasses[(text_alignment || 'left') as keyof typeof alignmentClasses])}>
             {contentElements}
             {renderButtons()}
             {renderFeatures()}
@@ -379,7 +381,7 @@ export function ACFCTASection({
     <section 
       className={cn(
         "wp-block-acf-cta-section relative overflow-hidden",
-        sizeClasses[size],
+        sizeClasses[(size || 'medium') as keyof typeof sizeClasses],
         background_type !== 'none' && "text-white",
         border_radius && "rounded-xl mx-4",
         className
