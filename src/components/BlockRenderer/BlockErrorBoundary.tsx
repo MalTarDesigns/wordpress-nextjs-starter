@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Component, ReactNode } from 'react';
+import React, { Component, type ReactNode } from 'react';
 import type { BlockErrorBoundaryProps, Block } from '@/types/blocks';
 import { BlockFallback } from './BlockFallback';
 
@@ -31,7 +31,7 @@ export class BlockErrorBoundary extends Component<
     };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  override componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     this.setState({
       error,
       errorInfo
@@ -83,15 +83,15 @@ export class BlockErrorBoundary extends Component<
     }
   }
 
-  render(): ReactNode {
+  override render(): ReactNode {
     if (this.state.hasError) {
       const FallbackComponent = this.props.fallback || BlockFallback;
       
       return (
         <FallbackComponent 
           error={this.state.error!}
-          blockName={this.props.block?.name}
-          block={this.props.block}
+          {...(this.props.block?.name && { blockName: this.props.block.name })}
+          {...(this.props.block && { block: this.props.block })}
           errorInfo={this.state.errorInfo}
         />
       );
@@ -111,8 +111,8 @@ export function withBlockErrorBoundary<P extends object>(
   return function BlockErrorBoundaryWrapper(props: P & { block?: Block }) {
     return (
       <BlockErrorBoundary 
-        fallback={fallbackComponent} 
-        block={props.block}
+        {...(fallbackComponent && { fallback: fallbackComponent })} 
+        {...(props.block && { block: props.block })}
       >
         <WrappedComponent {...props} />
       </BlockErrorBoundary>

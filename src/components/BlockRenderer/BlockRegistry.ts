@@ -7,7 +7,7 @@ import type { BlockRegistry as IBlockRegistry, BlockRegistration } from '@/types
  * supporting both Gutenberg core blocks and custom ACF blocks.
  */
 class BlockRegistryManager implements IBlockRegistry {
-  private blocks = new Map<string, BlockRegistration>();
+  blocks = new Map<string, BlockRegistration>();
 
   /**
    * Register a new block component
@@ -192,10 +192,10 @@ class BlockRegistryManager implements IBlockRegistry {
     this.blocks.forEach((registration, name) => {
       exported[name] = {
         name: registration.name,
-        category: registration.category,
-        icon: registration.icon,
-        description: registration.description,
-        supports: registration.supports
+        ...(registration.category && { category: registration.category }),
+        ...(registration.icon && { icon: registration.icon }),
+        ...(registration.description && { description: registration.description }),
+        ...(registration.supports && { supports: registration.supports })
       };
     });
 

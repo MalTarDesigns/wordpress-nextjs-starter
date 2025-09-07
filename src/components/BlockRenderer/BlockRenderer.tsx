@@ -78,8 +78,8 @@ export function BlockRenderer({
           key={`${block.name}-${index}-${block.id || block.clientId || ''}`}
           block={block}
           index={index}
-          fallbackComponent={fallbackComponent}
-          onError={onBlockError}
+          {...(fallbackComponent && { fallbackComponent })}
+          {...(onBlockError && { onError: onBlockError })}
         />
       ))}
     </div>
@@ -112,19 +112,19 @@ function SingleBlockRenderer({
       return (
         <BlockErrorBoundary 
           fallback={fallbackComponent || BlockFallback} 
-          onError={onError}
+          {...(onError && { onError })}
           block={block}
         >
           <Suspense fallback={<div>Loading block...</div>}>
             <BlockComponent
               block={block}
               attributes={getBlockAttributes(block)}
-              innerHTML={getBlockInnerHTML(block)}
-              innerBlocks={getBlockInnerBlocks(block)}
-              className={getBlockClassName(block)}
+              innerHTML={getBlockInnerHTML(block) || ''}
+              innerBlocks={getBlockInnerBlocks(block) || []}
+              className={getBlockClassName(block) || ''}
               isNested={isNested}
               index={index}
-              parentBlock={parentBlock}
+              {...(parentBlock && { parentBlock })}
             />
           </Suspense>
         </BlockErrorBoundary>
@@ -146,16 +146,16 @@ function SingleBlockRenderer({
   return (
     <BlockErrorBoundary 
       fallback={fallbackComponent || BlockFallback} 
-      onError={onError}
+      {...(onError && { onError })}
       block={block}
     >
       <Suspense fallback={<div>Loading block...</div>}>
         <BlockComponent
           block={block}
           attributes={getBlockAttributes(block)}
-          innerHTML={getBlockInnerHTML(block)}
-          innerBlocks={getBlockInnerBlocks(block)}
-          className={getBlockClassName(block)}
+          innerHTML={getBlockInnerHTML(block) || ''}
+          innerBlocks={getBlockInnerBlocks(block) || []}
+          className={getBlockClassName(block) || ''}
           isNested={isNested}
           index={index}
           parentBlock={parentBlock}
@@ -189,7 +189,7 @@ export function InnerBlocksRenderer({
           block={block}
           index={index}
           isNested={true}
-          parentBlock={parentBlock}
+          {...(parentBlock && { parentBlock })}
         />
       ))}
     </div>
@@ -263,10 +263,10 @@ function normalizeBlockName(blockName: string): string {
 export function useBlockRenderer() {
   return {
     renderBlocks: (blocks: Block[], options?: { className?: string }) => 
-      <BlockRenderer blocks={blocks} className={options?.className} />,
+      <BlockRenderer blocks={blocks} {...(options?.className && { className: options.className })} />,
     
     renderContent: (content: string, options?: BlockParserOptions & { className?: string }) =>
-      <BlockRenderer content={content} options={options} className={options?.className} />,
+      <BlockRenderer content={content} {...(options && { options })} {...(options?.className && { className: options.className })} />,
     
     parseBlocks: (content: string, options?: BlockParserOptions) => parseBlocks(content, options)
   };
