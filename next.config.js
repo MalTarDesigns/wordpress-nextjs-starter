@@ -11,7 +11,6 @@ const nextConfig = {
   trailingSlash: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  swcMinify: true,
   compress: true,
 
   // Performance optimizations
