@@ -1,4 +1,4 @@
-import { chromium, FullConfig } from '@playwright/test';
+import { chromium, type FullConfig } from '@playwright/test';
 
 async function globalSetup(config: FullConfig) {
   console.log('🚀 Starting E2E test setup...');
@@ -9,7 +9,7 @@ async function globalSetup(config: FullConfig) {
   
   try {
     // Wait for the application to be ready
-    const baseURL = config.projects[0].use.baseURL || 'http://localhost:3000';
+    const baseURL = config.projects[0]?.use?.baseURL || 'http://localhost:3000';
     
     console.log(`📍 Checking application availability at ${baseURL}`);
     
