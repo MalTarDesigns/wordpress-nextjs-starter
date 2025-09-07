@@ -5,7 +5,7 @@ import { print } from "graphql/language/printer";
 import { setSeoData, generateStructuredData, generateArticleStructuredData } from "@/utils/seoData";
 import { fetchGraphQL, fetchGraphQLWithRevalidation } from "@/utils/fetchGraphQL";
 import { ContentInfoQuery } from "@/queries/general/ContentInfoQuery";
-import type { ContentNode, Page as WPPage, Post as WPPost } from "@/gql/graphql";
+import type { ContentNode, Page, Post } from "@/gql/graphql";
 import PageTemplate from "@/components/Templates/Page/PageTemplate";
 import { nextSlugToWpSlug } from "@/utils/nextSlugToWpSlug";
 import PostTemplate from "@/components/Templates/Post/PostTemplate";
@@ -68,21 +68,21 @@ export async function generateMetadata({
     
     // Prepare content data for metadata generation
     const contentData = {
-      title: contentNode.title,
-      excerpt: contentNode.excerpt,
+      title: isPage(contentNode) || isPost(contentNode) ? contentNode.title : undefined,
+      excerpt: isPost(contentNode) ? contentNode.excerpt : undefined,
       publishedTime: contentNode.date,
       modifiedTime: contentNode.modified,
       ...(isPost(contentNode) && contentNode.author && {
         author: {
-          name: contentNode.author.name,
-          url: contentNode.author.uri,
+          name: contentNode.author.node.name,
+          url: contentNode.author.node.uri,
         },
       }),
     };
 
     // Generate enhanced metadata with structured data
     const metadata = setSeoData({
-      seo: contentNode.seo,
+      seo: (contentNode as any).seo,
       content: contentData,
       canonical,
       type: isPost(contentNode) ? 'article' : 'website',
@@ -98,11 +98,11 @@ export async function generateMetadata({
         'structured-data': JSON.stringify(
           generateStructuredData(
             {
-              seo: contentNode.seo,
+              seo: (contentNode as any).seo,
               content: contentData,
               canonical,
             },
-            contentNode.seo?.breadcrumbs?.filter((item): item is { text: string; url?: string } => Boolean(item.text))
+            (contentNode as any).seo?.breadcrumbs?.filter((item: any): item is { text: string; url?: string } => Boolean(item.text))
           )
         ),
       },
@@ -186,15 +186,15 @@ export default async function DynamicPage({
     // Generate structured data for the page
     const structuredData = isPost(contentNode)
       ? generateArticleStructuredData({
-          seo: contentNode.seo,
+          seo: (contentNode as any).seo,
           content: {
             title: contentNode.title,
             excerpt: contentNode.excerpt,
             publishedTime: contentNode.date,
             modifiedTime: contentNode.modified,
             author: contentNode.author ? {
-              name: contentNode.author.name,
-              url: contentNode.author.uri,
+              name: contentNode.author.node.name,
+              url: contentNode.author.node.uri,
             } : undefined,
           },
           canonical: `${process.env.NEXT_PUBLIC_BASE_URL}${slug === '/' ? '' : slug}`,
@@ -205,9 +205,9 @@ export default async function DynamicPage({
     const content = (() => {
       switch (contentNode.contentTypeName) {
         case "page":
-          return <PageTemplate node={contentNode as WPPage} />;
+          return <PageTemplate node={contentNode as Page} />;
         case "post":
-          return <PostTemplate node={contentNode as WPPost} />;
+          return <PostTemplate node={contentNode as Post} />;
         default:
           console.warn(`Content type '${contentNode.contentTypeName}' not implemented`);
           return (

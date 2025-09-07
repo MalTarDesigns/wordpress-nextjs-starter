@@ -63,11 +63,11 @@ function getDefaultCookieOptions(): CookieOptions {
 /**
  * Set JWT token cookie
  */
-export function setJWTTokenCookie(
+export async function setJWTTokenCookie(
   token: string,
   response?: NextResponse,
   options?: Partial<CookieOptions>
-): void {
+): Promise<void> {
   const cookieOptions = {
     ...getDefaultCookieOptions(),
     ...options,
@@ -79,20 +79,20 @@ export function setJWTTokenCookie(
     response.headers.set("Set-Cookie", cookieString);
   } else {
     // Server-side cookie setting
-    cookies().set(PREVIEW_COOKIES.JWT_TOKEN, token, cookieOptions);
+    (await cookies()).set(PREVIEW_COOKIES.JWT_TOKEN, token, cookieOptions);
   }
 }
 
 /**
  * Get JWT token from cookies
  */
-export function getJWTTokenFromCookies(request?: NextRequest): string | null {
+export async function getJWTTokenFromCookies(request?: NextRequest): Promise<string | null> {
   if (request) {
     return request.cookies.get(PREVIEW_COOKIES.JWT_TOKEN)?.value || null;
   }
   
   // Server-side cookie reading
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   return cookieStore.get(PREVIEW_COOKIES.JWT_TOKEN)?.value || null;
 }
 

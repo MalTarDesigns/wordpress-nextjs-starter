@@ -52,24 +52,19 @@ export function CoreList({
   }
 
   // Build list props
-  const listProps: React.HTMLAttributes<HTMLOListElement | HTMLUListElement> = {
+  const listProps = {
     className: cssClasses,
     'data-block-name': block.name
-  };
+  } as React.HTMLAttributes<HTMLOListElement | HTMLUListElement> & { 'data-block-name': string };
 
-  // Add ordered list specific props
-  if (isOrderedList) {
-    if (start && start !== 1) {
-      (listProps as React.OlHTMLAttributes<HTMLOListElement>).start = start;
-    }
-    if (reversed) {
-      (listProps as React.OlHTMLAttributes<HTMLOListElement>).reversed = true;
-    }
-  }
+  // Note: ordered list specific props (start, reversed) are now handled directly in the JSX
 
   return (
     <ListTag 
-      {...listProps}
+      className={listProps.className}
+      data-block-name={listProps['data-block-name']}
+      {...(isOrderedList && start && start !== 1 && { start })}
+      {...(isOrderedList && reversed && { reversed: true })}
       {...(listContent && {
         dangerouslySetInnerHTML: { __html: listContent }
       })}

@@ -6,8 +6,24 @@
 import { print } from "graphql/language/printer";
 import gql from "graphql-tag";
 import { fetchGraphQL } from "@/utils/fetchGraphQL";
-import { LoginPayload } from "@/gql/graphql";
 import { envConfig } from "@/lib/env";
+
+// Local type definitions
+export interface LoginPayload {
+  authToken?: string;
+  refreshToken?: string;
+  user?: {
+    id: string;
+    name: string;
+    email?: string;
+    roles?: {
+      nodes: Array<{
+        name: string;
+      }>;
+    };
+  };
+  errors?: string[];
+}
 
 // JWT token validation interface
 export interface JWTValidationResult {
@@ -104,10 +120,10 @@ export async function authenticateWordPress(
 
     return {
       success: true,
-      token: login.authToken,
-      refreshToken: login.refreshToken || undefined,
-      userId: user?.id,
-      username: user?.username || undefined,
+      ...(login.authToken && { token: login.authToken }),
+      ...(login.refreshToken && { refreshToken: login.refreshToken }),
+      ...(user?.id && { userId: user.id }),
+      ...(user?.name && { username: user.name }),
       expiresIn: 24 * 60 * 60, // 24 hours default
     };
   } catch (error) {

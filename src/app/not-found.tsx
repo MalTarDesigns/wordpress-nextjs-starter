@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   );
 
-  const metadata = setSeoData({ seo: contentNode.seo });
+  const metadata = setSeoData({ seo: (contentNode as any).seo });
 
   return {
     ...metadata,

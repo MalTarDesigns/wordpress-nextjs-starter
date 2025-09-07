@@ -36,7 +36,7 @@ export function registerDefaultBlocks(): void {
     BlockRegistry.registerBlocks([
       {
         name: 'core/paragraph',
-        component: CoreParagraph,
+        component: CoreParagraph as any,
         category: 'common',
         icon: 'paragraph',
         description: 'Start with the building block of all narrative.',
@@ -62,7 +62,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'core/heading',
-        component: CoreHeading,
+        component: CoreHeading as any,
         category: 'common',
         icon: 'heading',
         description: 'Introduce new sections and organize content to help visitors understand.',
@@ -84,7 +84,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'core/image',
-        component: CoreImage,
+        component: CoreImage as any,
         category: 'common',
         icon: 'format-image',
         description: 'Insert an image to make a visual statement.',
@@ -97,7 +97,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'core/list',
-        component: CoreList,
+        component: CoreList as any,
         category: 'common',
         icon: 'editor-ul',
         description: 'Create a bulleted or numbered list.',
@@ -118,7 +118,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'core/button',
-        component: CoreButton,
+        component: CoreButton as any,
         category: 'common',
         icon: 'button',
         description: 'Prompt visitors to take action with a button-style link.',
@@ -140,7 +140,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'core/columns',
-        component: CoreColumns,
+        component: CoreColumns as any,
         category: 'layout',
         icon: 'columns',
         description: 'Display content in multiple columns, with blocks added to each column.',
@@ -158,7 +158,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'core/column',
-        component: CoreColumn,
+        component: CoreColumn as any,
         category: 'layout',
         icon: 'columns',
         description: 'A single column within a columns block.',
@@ -183,7 +183,7 @@ export function registerDefaultBlocks(): void {
     BlockRegistry.registerBlocks([
       {
         name: 'acf/hero',
-        component: ACFHeroBlock,
+        component: ACFHeroBlock as any,
         category: 'theme',
         icon: 'cover-image',
         description: 'Hero section with background image, title, subtitle, and call-to-action button.',
@@ -196,7 +196,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'acf/hero-section',
-        component: ACFHeroSection,
+        component: ACFHeroSection as any,
         category: 'theme',
         icon: 'cover-image',
         description: 'Advanced hero section with multiple layouts, parallax effects, and enhanced features.',
@@ -209,8 +209,8 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'acf/image-gallery',
-        component: ACFImageGallery,
-        category: 'media',
+        component: ACFImageGallery as any,
+        category: 'widgets',
         icon: 'format-gallery',
         description: 'Responsive image gallery with lightbox functionality and multiple layout options.',
         supports: {
@@ -222,7 +222,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'acf/testimonial',
-        component: ACFTestimonialBlock,
+        component: ACFTestimonialBlock as any,
         category: 'theme',
         icon: 'testimonial',
         description: 'Display customer testimonial with rating, quote, author information, and avatar.',
@@ -235,7 +235,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'acf/testimonial-section',
-        component: ACFTestimonialSection,
+        component: ACFTestimonialSection as any,
         category: 'theme',
         icon: 'testimonial',
         description: 'Advanced testimonial section with multiple layouts, ratings, and carousel functionality.',
@@ -248,8 +248,8 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'acf/faq-section',
-        component: ACFFAQSection,
-        category: 'text',
+        component: ACFFAQSection as any,
+        category: 'common',
         icon: 'editor-help',
         description: 'FAQ section with accordion functionality, search, and category filtering.',
         supports: {
@@ -261,7 +261,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'acf/cta',
-        component: ACFCTABlock,
+        component: ACFCTABlock as any,
         category: 'theme',
         icon: 'megaphone',
         description: 'Call-to-action section with customizable background, text, and button.',
@@ -278,7 +278,7 @@ export function registerDefaultBlocks(): void {
       },
       {
         name: 'acf/cta-section',
-        component: ACFCTASection,
+        component: ACFCTASection as any,
         category: 'theme',
         icon: 'megaphone',
         description: 'Advanced CTA section with multiple layouts, features list, and social proof.',

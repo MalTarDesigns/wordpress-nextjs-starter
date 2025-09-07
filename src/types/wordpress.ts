@@ -1,12 +1,12 @@
-import type { ContentNode } from '@/gql/graphql';
+import type { ContentNode, Page, Post } from '@/gql/graphql';
 
 // Type guards for WordPress content types
-export function isPage(contentNode: ContentNode): contentNode is ContentNode {
-  return contentNode.nodeType === 'page';
+export function isPage(contentNode: ContentNode): contentNode is Page {
+  return contentNode.contentTypeName === 'page';
 }
 
-export function isPost(contentNode: ContentNode): contentNode is ContentNode {
-  return contentNode.nodeType === 'post';
+export function isPost(contentNode: ContentNode): contentNode is Post {
+  return contentNode.contentTypeName === 'post';
 }
 
 // Webhook and Revalidation Types

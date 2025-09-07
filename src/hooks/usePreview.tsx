@@ -92,23 +92,23 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
       capabilities: string[];
     }>("wp_user_data");
 
-    const contentStatus = searchParams.get("status") as PreviewState["contentStatus"];
-    const contentType = searchParams.get("type") as PreviewState["contentType"];
+    const contentStatus = searchParams.get("status") as PreviewState["contentStatus"] | null;
+    const contentType = searchParams.get("type") as PreviewState["contentType"] | null;
     
-    const newState: PreviewState = {
+    const newState = {
       isActive: isPreviewUrl && !!previewStateCookie?.isActive,
-      contentId: previewStateCookie?.contentId,
-      contentType: contentType || previewStateCookie?.contentType,
-      contentStatus,
-      userId: previewStateCookie?.userId || userDataCookie?.id,
-      username: previewStateCookie?.username || userDataCookie?.username,
+      ...(previewStateCookie?.contentId && { contentId: previewStateCookie.contentId }),
+      ...(contentType || previewStateCookie?.contentType ? { contentType: contentType || previewStateCookie?.contentType } : {}),
+      ...(contentStatus ? { contentStatus } : {}),
+      ...(previewStateCookie?.userId || userDataCookie?.id ? { userId: previewStateCookie?.userId || userDataCookie?.id } : {}),
+      ...(previewStateCookie?.username || userDataCookie?.username ? { username: previewStateCookie?.username || userDataCookie?.username } : {}),
       userRoles: userDataCookie?.roles || [],
-      startTime: previewStateCookie?.startTime,
-      lastActivity: previewStateCookie?.lastActivity,
+      ...(previewStateCookie?.startTime && { startTime: previewStateCookie.startTime }),
+      ...(previewStateCookie?.lastActivity && { lastActivity: previewStateCookie.lastActivity }),
       canEdit: userDataCookie?.roles?.some(role => ["administrator", "editor", "author"].includes(role)) || false,
       canPublish: userDataCookie?.roles?.some(role => ["administrator", "editor"].includes(role)) || false,
       isLoading: false,
-    };
+    } as PreviewState;
 
     setState(newState);
     return newState;
